@@ -5,10 +5,6 @@
 ; --------------- Defines -----------------
 (def cfg-name ".mvMusic-cfg.edn")
 
-(def default-cfg (str
-  "{\n"
-  ":music-folder \"~/music\"\n"
-  "}"))
 ; ---------------- end defines --------------
 
 (def cfg-path (str (System/getProperty "user.home") "/" cfg-name))
