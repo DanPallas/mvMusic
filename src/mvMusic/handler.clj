@@ -1,12 +1,17 @@
 (ns mvMusic.handler
-  (:use compojure.core)
+  (:use [compojure.core]
+        [mvMusic.views])
   (:require [compojure.handler :as handler]
             [compojure.route :as route]))
 
+
 (defroutes app-routes
-  (GET "/" [] "Hello World")
+  (GET "/" [] (main-page "/"))
+  (GET "/:user-path" [user-path] (main-page user-path))
   (route/resources "/")
   (route/not-found "Not Found"))
 
 (def app
   (handler/site app-routes))
+
+(main-page "iTunes%iTunes?Music%")

@@ -5,6 +5,7 @@
                  [compojure "1.1.5"]
                  [hiccup "1.0.4"]]
   :plugins [[lein-ring "0.8.7"]]
-  :ring {:handler mvMusic.handler/app}
+  :ring {:init mvMusic.configuration/load-cfg
+         :handler mvMusic.handler/app}
   :profiles
   {:dev {:dependencies [[ring-mock "0.1.5"]]}})
