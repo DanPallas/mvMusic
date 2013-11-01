@@ -14,7 +14,7 @@
 (defn format-directories 
   "format directories into table rows"
   [path]
-  (->> (file-list path list-directories)
+  (->> (directory-url-list path)
        (map #(conj [:a {:href (second %1)}] (first %1)))
        (vec)
        (map #(conj [:td] %1))
@@ -23,7 +23,7 @@
 (defn format-files 
   "format files into table rows"
   [path]
-  (->> (file-list path list-files)
+  (->> (file-url-list path)
        (map #(conj [:a {:href (second %1)}] (first %1)))
        (vec)
        (map #(conj [:td] %1))

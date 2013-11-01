@@ -7,7 +7,7 @@
 
 (defn main-page 
   [path]
-  (let [path (clean path)] 
+  (let [c-path (clean path) ] 
     (html5
-      (template/head (str "mvMusic " path))
-      (template/body path))))
+      (template/head (str "mvMusic /" (to-relative (str c-path))))
+      (template/body c-path))))

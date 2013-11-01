@@ -57,6 +57,26 @@
        (map #(vector (first %1) (remove-illegal (second %1))))
        (vec)))
 
+(defn directory-url-list 
+  "Returns a vector containing a vector for each non-hidden child directory of 
+  of the passed path Each vector contains the filename and a url 
+  representation of the file."
+  [path]
+  (->> (list-directories (io/as-file path))
+       (map #(vector (first %1) (to-relative (second %1))))
+       (map #(vector (first %1) (remove-illegal (second %1))))
+       (vec)))
+
+(defn file-url-list 
+  "Returns a vector containing a vector for each non-hidden child file of 
+  of the passed directory. Each vector contains the 
+  filename and a url representation of the file path."
+  [path]
+  (->> (list-files (io/as-file path))
+       (map #(vector (first %1) (to-relative (second %1))))
+       (map #(vector (first %1) (remove-illegal (second %1))))
+       (vec)))
+
 (defn replace-url-chars
   [path]
   "Converts url path characters back to file path characters."
@@ -70,7 +90,7 @@
   [path]
   (if 
     (not= nil (re-find 
-                #"^\.\.[^a-z\ 0-9.]|[^a-z\ 0-9.]\.\.[^a-z\ 0-9.]|[^a-z\ 0-9.]\.\.$|^..$" 
+        #"^\.\.[^a-z\ 0-9.]|[^a-z\ 0-9.]\.\.[^a-z\ 0-9.]|[^a-z\ 0-9.]\.\.$|^..$" 
                 path))
     "/"
     path))
