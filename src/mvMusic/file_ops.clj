@@ -78,8 +78,8 @@
        (vec)))
 
 (defn replace-url-chars
-  [path]
   "Converts url path characters back to file path characters."
+  [path]
   (-> (string/replace path path-delimiter "/")
       (string/replace space-replacement " ")
       (string/replace dot-replacement ".")))
@@ -96,8 +96,8 @@
     path))
 
 (defn clean
-  [path]
   "Takes url path parameter and returns safe, path parameter with url characters 
   replaced"
+  [path]
   (->> (sanitize (replace-url-chars path))
        (java.io.File. (io/as-file (:music-folder cfg-map)))))
