@@ -91,9 +91,7 @@
   (if 
     (not= nil (re-find 
         #"^\.\.[^a-z\ 0-9.]|[^a-z\ 0-9.]\.\.[^a-z\ 0-9.]|[^a-z\ 0-9.]\.\.$|^..$" 
-                path))
-    "/"
-    path))
+                path))  "/" path))
 
 (defn clean
   "Takes url path parameter and returns safe, path parameter with url characters 

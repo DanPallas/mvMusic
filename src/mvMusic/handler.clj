@@ -14,4 +14,3 @@
 (def app
   (handler/site app-routes))
 
-(main-page "iTunes%iTunes?Music%")
