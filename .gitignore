@@ -9,3 +9,7 @@ pom.xml
 .lein-failures
 .lein-plugins
 .lein-env
+.DS_Store
+src/.DS_Store
+src/mvMusic/.DS_Store
+.lein-repl-history
