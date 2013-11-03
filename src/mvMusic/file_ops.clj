@@ -63,9 +63,9 @@
   representation of the file."
   [path]
   (->> (list-directories (io/as-file path))
-       (map #(vector (first %1) (to-relative (second %1))))
-       (map #(vector (first %1) (remove-illegal (second %1))))
-       (map #(vector (first %1) (str browse-path (second %1))))
+       (map #(vector (first %1) (->> (to-relative (second %1))
+                                     (remove-illegal)
+                                     (str browse-path)))) 
        (vec)))
 
 (defn file-url-list 
@@ -74,9 +74,9 @@
   filename and a url representation of the file path."
   [path]
   (->> (list-files (io/as-file path))
-       (map #(vector (first %1) (to-relative (second %1))))
-       (map #(vector (first %1) (remove-illegal (second %1))))
-       (map #(vector (first %1) (str browse-path (second %1))))
+       (map #(vector (first %1) (->> (to-relative (second %1))
+                                     (map remove-illegal)
+                                     (str browse-path))))
        (vec)))
 
 (defn replace-url-chars
