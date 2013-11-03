@@ -1,0 +1,35 @@
+html
+{
+	height:100%;
+}
+body
+{
+	background-color:#cccccc;
+	height:100%;
+}
+
+.files
+{
+	background-color:#ccccff;
+	margin:3px;
+	padding:2px;
+}
+.directories
+{
+	background-color:#9999ff;
+	margin:3px;
+	padding:2px;
+}
+#parent
+{
+	background-color:#bbbbff;
+	padding:10px;
+	height: 100%;
+}
+#browse-list
+{
+	background-color:#6060ff;
+	padding:3px;
+	width:30%;
+	border-radius:5px;
+}
