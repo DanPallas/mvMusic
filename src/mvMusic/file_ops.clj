@@ -1,5 +1,5 @@
 (ns mvMusic.file-ops
-  (:use [mvMusic.configuration])
+  (:use [mvMusic.global])
   (:require [clojure.java.io :as io]
             [clojure.string :as string]))
 
@@ -65,6 +65,7 @@
   (->> (list-directories (io/as-file path))
        (map #(vector (first %1) (to-relative (second %1))))
        (map #(vector (first %1) (remove-illegal (second %1))))
+       (map #(vector (first %1) (str browse-path (second %1))))
        (vec)))
 
 (defn file-url-list 
@@ -75,6 +76,7 @@
   (->> (list-files (io/as-file path))
        (map #(vector (first %1) (to-relative (second %1))))
        (map #(vector (first %1) (remove-illegal (second %1))))
+       (map #(vector (first %1) (str browse-path (second %1))))
        (vec)))
 
 (defn replace-url-chars

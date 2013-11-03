@@ -1,7 +1,6 @@
 (ns mvMusic.view-templates
   (:use [hiccup core page]
-        [mvMusic.file-ops]
-        [mvMusic.configuration]))
+        [mvMusic.file-ops]))
 
 (defn wrap-tag
   "Returns a hiccup vector with the given content tag and optional attribute
@@ -14,26 +13,29 @@
     params:
       title: string to use as title"
   [title]
-  (wrap-tag (wrap-tag title :title) :head))
+  [:head
+    (wrap-tag title :title)
+    [:link {:rel "stylesheet" :type "text/css" :href "/main.css"}] ])
 
 (defn format-directories
   [path]
   (->> (directory-url-list path)
        (map #(wrap-tag (first %1) :a {:href (second %1)}))
-       (map #(wrap-tag %1 :div))))
+       (map #(wrap-tag %1 :div {:class "directories"}))))
 
 (defn format-files 
   "format files into table rows"
   [path]
   (->> (file-url-list path)
        (map #(wrap-tag (first %1) :a {:href (second %1)}))
-       (map #(wrap-tag %1 :div))))
+       (map #(wrap-tag %1 :div {:class "files"}))))
 
 (defn body 
   "Generate body html"
   [path]
   [:body
-   [:h1 "mvMusic"] 
-   (vec (concat [:div] 
+   [:div {:id "parent"}
+    [:h1 "mvMusic"] 
+    (vec (concat [:div {:id "browse-list"}] 
           (format-directories path)
-           (format-files path)))])
+           (format-files path)))]])
