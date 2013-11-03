@@ -20,24 +20,20 @@
   [path]
   (->> (directory-url-list path)
        (map #(wrap-tag (first %1) :a {:href (second %1)}))
-       (map #(wrap-tag %1 :td))
-       (map #(wrap-tag %1 :tr))))
+       (map #(wrap-tag %1 :div))))
 
 (defn format-files 
   "format files into table rows"
   [path]
   (->> (file-url-list path)
        (map #(wrap-tag (first %1) :a {:href (second %1)}))
-       (map #(wrap-tag %1 :td))
-       (map #(wrap-tag %1 :tr))))
+       (map #(wrap-tag %1 :div))))
 
 (defn body 
   "Generate body html"
   [path]
   [:body
    [:h1 "mvMusic"] 
-   (vec (concat [:table {:border 1}] 
+   (vec (concat [:div] 
           (format-directories path)
            (format-files path)))])
-
-
