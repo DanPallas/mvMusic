@@ -15,17 +15,17 @@
   "return sorted a vector containing the filename and path of each direct 
   non-hidden child directory of file"
   [file]
-  (vec (->> (apply vector (.listFiles file))
+  (->> (.listFiles file)
             (filter #(and (not (.isHidden %1)) (.isDirectory %1)))
-            (map pair-name-path))))
+            (map pair-name-path)))
 
 (defn list-files 
   "return a vector containing the filename and path of each non-hidden file
   which is a direct child of the file"
   [file]
-  (vec (->> (apply vector (.listFiles file))
-            (filter #(and (not (.isHidden %1)) (.isFile %1)))
-            (map pair-name-path))))
+  (->> (.listFiles file)
+       (filter #(and (not (.isHidden %1)) (.isFile %1)))
+       (map pair-name-path)))
 
 (defn to-relative 
   "convert path to path relative to music folder"
@@ -35,22 +35,12 @@
     (.relativize (.toURI (java.io.File. (:music-folder cfg-map))))
     (.getPath)))
 
-;(defn remove-illegal 
-;  "removes both forward and backward slashes and spaces from paths and replaces 
-;  them with path delimiter"
-;  [path]
-;  (-> (string/replace path "/" path-delimiter)
-;      (string/replace  "\\" path-delimiter)
-;      (string/replace  " " space-replacement)
-;      (string/replace  "." dot-replacement)))
-
 (defn file-list 
   "Get list of direct children from path using function list-func which has had 
   it's path made relative to music-folder and has had it's slashes removed"
   [path list-func]
   (->> (list-func path)
-       (map #(vector (first %1) (to-relative (second %1))))
-       (vec)))
+       (map #(vector (first %1) (to-relative (second %1))))))
 
 (defn directory-url-list 
   "Returns a vector containing a vector for each non-hidden child directory of 
@@ -59,8 +49,7 @@
   [folder]
   (->> (list-directories folder)
        (map #(vector (first %1) (->> (to-relative (second %1))
-                                     (str browse-path)))) 
-       (vec)))
+                                     (str browse-path)))) ))
 
 (defn file-url-list 
   "Returns a vector containing a vector for each non-hidden child file of 
@@ -69,8 +58,7 @@
   [path]
   (->> (list-files path)
        (map #(vector (first %1) (->> (to-relative (second %1)) 
-                                     (str download-path))))
-       (vec)))
+                                     (str download-path))))))
 
 (defn sanitize
   "Tests for attempted unauthorized access. Returns empty string if unauthorized

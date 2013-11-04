@@ -8,8 +8,6 @@
 
 (defroutes app-routes
   (GET "/" [] (main-page "/"))
-  ;(GET (str browse-path ":user-path") [user-path] (main-page user-path))
-  ;(GET (str download-path ":path") [path] (dl-file path))
   (GET [(str browse-path ":user-path") :user-path #".*"] 
        [user-path] (main-page user-path))
   (GET [(str download-path ":user-path") :user-path #".*"] 
