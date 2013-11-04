@@ -24,11 +24,13 @@
        (map #(wrap-tag %1 :div {:class "directories"}))))
 
 (defn format-files 
-  "format files into table rows"
   [path]
+  "format files into table rows"
   (->> (file-url-list path)
-       (map #(wrap-tag (first %1) :a {:href (second %1)}))
-       (map #(wrap-tag %1 :div {:class "files"}))))
+       (map #(vector :div {:class "files"}
+                     [:div {:class "filename"} (first %1)]
+                     [:div {:class "download"} 
+                      [:a {:href (second %1)} "Download"]]))))
 
 (defn body 
   "Generate body html"

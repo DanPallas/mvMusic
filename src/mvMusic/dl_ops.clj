@@ -1,5 +1,6 @@
 (ns mvMusic.dl-ops
-  (:use [mvMusic.global])
+  (:use [mvMusic.global]
+        [mvMusic.file-ops])
   (:require [clojure.java.io :as io]))
 
 (defn temp-exists? 
@@ -12,4 +13,9 @@
   []
  (if-not (temp-exists?)
   (println (.mkdir (io/as-file (:temp-folder cfg-map))))))
+
+(defn dl-file
+  "Returns a file"
+  [user-path]
+  (io/as-file (clean user-path)))
 

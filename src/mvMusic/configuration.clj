@@ -17,5 +17,5 @@
   it doesn't already exist."
   (if (cfg-exists?)
     (with-open [rdr (java.io.PushbackReader. (io/reader cfg-path))]
-       (def cfg-map (merge cfg-map (edn/read rdr))))
+       (intern 'mvMusic.global 'cfg-map (merge cfg-map (edn/read rdr))))
     ((spit cfg-path (str cfg-map)))))

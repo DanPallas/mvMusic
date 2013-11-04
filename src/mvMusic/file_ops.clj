@@ -75,8 +75,8 @@
   [path]
   (->> (list-files (io/as-file path))
        (map #(vector (first %1) (->> (to-relative (second %1))
-                                     (map remove-illegal)
-                                     (str browse-path))))
+                                     (remove-illegal)
+                                     (str download-path))))
        (vec)))
 
 (defn replace-url-chars

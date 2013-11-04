@@ -10,12 +10,15 @@ body
 
 .files
 {
+	float:top;
 	background-color:#ccccff;
 	margin:3px;
 	padding:2px;
+	overflow:auto;
 }
 .directories
 {
+	float:top;
 	background-color:#9999ff;
 	margin:3px;
 	padding:2px;
@@ -28,8 +31,22 @@ body
 }
 #browse-list
 {
+	float:left;
 	background-color:#6060ff;
 	padding:3px;
-	width:30%;
+	width:50%;
 	border-radius:5px;
+}
+.download
+{
+	float:left;
+	width:20%;
+	height:100%;
+}
+.filename
+{
+	float:top;
+	width:80%;
+	height:100%;
+	float:left;
 }
