@@ -3,10 +3,6 @@
   (:require [clojure.java.io :as io]
             [clojure.string :as string]))
 
-(def path-delimiter "<")
-(def space-replacement " ")
-(def dot-replacement ">")
-
 (defn get-name [x]
   (.getName x))
 (defn get-path [x]
@@ -39,14 +35,14 @@
     (.relativize (.toURI (java.io.File. (:music-folder cfg-map))))
     (.getPath)))
 
-(defn remove-illegal 
-  "removes both forward and backward slashes and spaces from paths and replaces 
-  them with path delimiter"
-  [path]
-  (-> (string/replace path "/" path-delimiter)
-      (string/replace  "\\" path-delimiter)
-      (string/replace  " " space-replacement)
-      (string/replace  "." dot-replacement)))
+;(defn remove-illegal 
+;  "removes both forward and backward slashes and spaces from paths and replaces 
+;  them with path delimiter"
+;  [path]
+;  (-> (string/replace path "/" path-delimiter)
+;      (string/replace  "\\" path-delimiter)
+;      (string/replace  " " space-replacement)
+;      (string/replace  "." dot-replacement)))
 
 (defn file-list 
   "Get list of direct children from path using function list-func which has had 
@@ -54,17 +50,15 @@
   [path list-func]
   (->> (list-func path)
        (map #(vector (first %1) (to-relative (second %1))))
-       (map #(vector (first %1) (remove-illegal (second %1))))
        (vec)))
 
 (defn directory-url-list 
   "Returns a vector containing a vector for each non-hidden child directory of 
   of the passed path Each vector contains the filename and a url 
   representation of the file."
-  [path]
-  (->> (list-directories (io/as-file path))
+  [folder]
+  (->> (list-directories folder)
        (map #(vector (first %1) (->> (to-relative (second %1))
-                                     (remove-illegal)
                                      (str browse-path)))) 
        (vec)))
 
@@ -73,18 +67,10 @@
   of the passed directory. Each vector contains the 
   filename and a url representation of the file path."
   [path]
-  (->> (list-files (io/as-file path))
-       (map #(vector (first %1) (->> (to-relative (second %1))
-                                     (remove-illegal)
+  (->> (list-files path)
+       (map #(vector (first %1) (->> (to-relative (second %1)) 
                                      (str download-path))))
        (vec)))
-
-(defn replace-url-chars
-  "Converts url path characters back to file path characters."
-  [path]
-  (-> (string/replace path path-delimiter "/")
-      (string/replace space-replacement " ")
-      (string/replace dot-replacement ".")))
 
 (defn sanitize
   "Tests for attempted unauthorized access. Returns empty string if unauthorized
@@ -95,9 +81,8 @@
         #"^\.\.[^a-z\ 0-9.]|[^a-z\ 0-9.]\.\.[^a-z\ 0-9.]|[^a-z\ 0-9.]\.\.$|^..$" 
                 path))  "/" path))
 
-(defn clean
-  "Takes url path parameter and returns safe, path parameter with url characters 
-  replaced"
-  [path]
-  (->> (sanitize (replace-url-chars path))
+(defn get-file
+  "Takes user inputted path parameter and returns a file in the music folder"
+  [user-path]
+  (->> (sanitize user-path)
        (java.io.File. (io/as-file (:music-folder cfg-map)))))

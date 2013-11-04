@@ -33,11 +33,11 @@
                       [:a {:href (second %1)} "Download"]]))))
 
 (defn body 
-  "Generate body html"
-  [path]
+  "Generate body html from a java file which should be a folder"
+  [folder]
   [:body
    [:div {:id "parent"}
     [:h1 "mvMusic"] 
     (vec (concat [:div {:id "browse-list"}] 
-          (format-directories path)
-           (format-files path)))]])
+          (format-directories folder)
+           (format-files folder)))]])

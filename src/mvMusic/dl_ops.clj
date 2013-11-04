@@ -15,7 +15,7 @@
   (println (.mkdir (io/as-file (:temp-folder cfg-map))))))
 
 (defn dl-file
-  "Returns a file"
+  "Returns a file from a user inputted path"
   [user-path]
-  (io/as-file (clean user-path)))
+  (get-file user-path))
 
