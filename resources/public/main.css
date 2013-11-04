@@ -28,6 +28,7 @@ body
 	background-color:#bbbbff;
 	padding:10px;
 	height: 100%;
+	overflow:auto;
 }
 #browse-list
 {
