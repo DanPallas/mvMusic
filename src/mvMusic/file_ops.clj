@@ -1,5 +1,5 @@
 (ns mvMusic.file-ops
-  (:use [mvMusic.global])
+  (:use (mvMusic global))
   (:require [clojure.java.io :as io]
             [clojure.string :as string]))
 
@@ -43,7 +43,7 @@
        (map #(vector (first %1) (to-relative (second %1))))))
 
 (defn directory-url-list 
-  "Returns a vector containing a vector for each non-hidden child directory of 
+  "Returns a list containing a vector for each non-hidden child directory of 
   of the passed path Each vector contains the filename and a url 
   representation of the file."
   [folder]

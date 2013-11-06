@@ -1,6 +1,5 @@
 (ns mvMusic.dl-ops
-  (:use [mvMusic.global]
-        [mvMusic.file-ops])
+  (:use (mvMusic global file-ops))
   (:require [clojure.java.io :as io]))
 
 (defn temp-exists? 
@@ -18,4 +17,3 @@
   "Returns a file from a user inputted path"
   [user-path]
   (get-file user-path))
-

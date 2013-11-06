@@ -1,8 +1,6 @@
 (ns mvMusic.handler
   (:use [compojure.core]
-        [mvMusic.views]
-        [mvMusic.global]
-        [mvMusic.dl-ops])
+        (mvMusic views global dl-ops))
   (:require [compojure.handler :as handler]
             [compojure.route :as route]))
 

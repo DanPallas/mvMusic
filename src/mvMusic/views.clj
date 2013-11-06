@@ -1,8 +1,7 @@
 (ns mvMusic.views
   (:use [compojure.core]
         [hiccup core page]
-        [mvMusic.configuration]
-        [mvMusic.file-ops])
+        (mvMusic configuration file-ops))
   (:require [mvMusic.view-templates :as template]))
 
 (defn main-page 

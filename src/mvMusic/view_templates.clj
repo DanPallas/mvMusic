@@ -1,6 +1,6 @@
 (ns mvMusic.view-templates
   (:use [hiccup core page]
-        [mvMusic.file-ops]))
+        (mvMusic file-ops)))
 
 (defn wrap-tag
   "Returns a hiccup vector with the given content tag and optional attribute
