@@ -1,17 +1,38 @@
 html
 {
+	padding:0px;
+	margin:0px;
 	height:100%;
 }
 body
 {
 	background-color:#cccccc;
-	height:100%;
+	height:98%;
+	margin:0px;
+	padding:0px;
+	overflow:auto;
 }
-
+#parent
+{
+	background-color:#a0aec1;
+	padding:10px;
+	border:0px;
+	margin:0px;
+	height:100%;
+	overflow:auto;
+}
+#browse-list
+{
+	float:left;
+	background-color:#466289;
+	padding:3px;
+	width:50%;
+	border-radius:5px;
+}
 .files
 {
 	float:top;
-	background-color:#ccccff;
+	background-color:#dbe8f9;
 	margin:3px;
 	padding:2px;
 	overflow:auto;
@@ -19,24 +40,9 @@ body
 .directories
 {
 	float:top;
-	background-color:#9999ff;
+	background-color:#627894;
 	margin:3px;
 	padding:2px;
-}
-#parent
-{
-	background-color:#bbbbff;
-	padding:10px;
-	height: 100%;
-	overflow:auto;
-}
-#browse-list
-{
-	float:left;
-	background-color:#6060ff;
-	padding:3px;
-	width:50%;
-	border-radius:5px;
 }
 .download
 {
@@ -51,3 +57,4 @@ body
 	height:100%;
 	float:left;
 }
+
