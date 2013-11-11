@@ -15,7 +15,7 @@
   "Creates temp folder at location in cfg-map if it does not exists"
   []
  (if-not (temp-exists?)
-  (println (.mkdir (io/as-file (:temp-folder cfg-map))))))
+  (.mkdir (io/as-file (:temp-folder cfg-map)))))
 
 (defn dl-file
   "Returns a file from a user inputted path"
