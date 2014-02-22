@@ -19,3 +19,5 @@
     (with-open [rdr (java.io.PushbackReader. (io/reader cfg-path))]
        (intern 'mvMusic.global 'cfg-map (merge cfg-map (edn/read rdr))))
     ((spit cfg-path (str cfg-map)))))
+
+(load-cfg)

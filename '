@@ -1,0 +1,34 @@
+(ns mvMusic.library.insert
+  (:use [korma core]
+        [mvMusic.library util])
+  (:require [mvMusic.library.entities :as e]
+            [mvMusic.library.fetch :as fetch]
+            [clojure.sets :as sets]))
+
+(defn albums
+  "Takes any number of maps representing albums and adds them to the library
+  if they don't already have entries"
+  [f & r]
+  (let
+    [a (conj (or r '()) f) ]
+    (if (> (count a) 0) 
+      (insert e/albums
+              (values a))
+      nil)))
+
+(defn songs
+  [f & r]
+  (let
+    [x (conj (or r '()) f)
+     a (extract-albums x)]
+     a 
+    ))
+
+(map #(dissoc % :id) '({:val 1 :id 5} {:val 1 :id 10}))
+(fetch/albums)
+
+(defn folders
+  [f & r]
+  (let
+    [x (hash-set (conj (or r '()) f))]
+    ))
