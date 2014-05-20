@@ -13,3 +13,5 @@ pom.xml
 src/.DS_Store
 src/mvMusic/.DS_Store
 .lein-repl-history
+*~
+.nrepl-port

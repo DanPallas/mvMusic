@@ -8,7 +8,7 @@
 (declare album-art)
 
 (defn insert 
-  "Inserts vls into table ent. (mostly created for easier testing)"
+  "Inserts vls into table ent. (created for easier testing)"
   [ent vls] 
   (kc/insert ent (kc/values vls)))
 

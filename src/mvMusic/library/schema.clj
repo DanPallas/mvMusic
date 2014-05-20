@@ -5,87 +5,84 @@
             [mvMusic.log :as log]))
 
 (def db
-  {:classname "org.sqlite.JDBC"
-   :subprotocol "sqlite"
+  {:classname "org.h2.Driver"
+   :subprotocol "h2"
    :subname (str (:temp-folder cfg-map) 
-                 (if (= (last (:temp-folder cfg-map)) \/) "" \/) 
-                 db-name)})
-
-(def songs 
-  (jdb/create-table-ddl :songs
-                        [:id :integer "PRIMARY KEY AUTOINCREMENT"]
-                        [:track :integer]
-                        [:disc :integer]
-                        [:title :text]
-                        [:artist :text]
-                        [:length :integer]
-                        [:year :integer]
-                        ["[album-id]" :integer]
-                        [:extension :text]
-                        [:genre :text]
-                        [:folder :text]
-                        [:filename :text]
-                        [:path :text]
-                        ["[mod-date]":integer]
-                        ["foreign key([album-id]) REFERENCES album(id)"]
-                        ["foreign key(folder) REFERENCES folders(path)"]))
-
-(def albums 
-  (jdb/create-table-ddl :albums
-                        [:id :integer "PRIMARY KEY AUTOINCREMENT"]
-                        [:title :text]
-                        [:artist :text]
-                        [:image :text]
-                        [:sort :text]))
-
-(def downloads 
-  (jdb/create-table-ddl :downloads
-                        [:id :integer "PRIMARY KEY AUTOINCREMENT"]
-                        [:path :text]
-                        [:file :text]))
-
-(def songs-downloads 
-  (jdb/create-table-ddl "[songs-downloads]"
-                        ["[songs-id]" :integer]
-                        ["[downloads-id]" :integer]
-                        ["FOREIGN KEY([songs-id]) REFERENCES songs(id)"]
-                        ["FOREIGN KEY([downloads-id]) REFERENCES downloads(id)"]))
+                 (if (= (last (:temp-folder cfg-map)) \/) 
+                   "" 
+                   \/) 
+                 "library")})
 
 (def folders
   (jdb/create-table-ddl :folders
-                        [:path :text "PRIMARY KEY"]
-                        ["[mod-date]" :integer]))
+                        [:folder "VARCHAR(1024)" "PRIMARY KEY"]
+                        [:mod_date :TIMESTAMP]
+                        [:image :bool]))
 
-(def artist-idx "CREATE INDEX songs_artist ON songs (artist)")
+(def songs 
+  (jdb/create-table-ddl :songs
+                        [:file "VARCHAR(1024) PRIMARY KEY"]
+                        [:track :integer]
+                        [:disc :integer]
+                        [:title "VARCHAR(1024)"]
+                        [:artist "VARCHAR(1024)"]
+                        [:time :integer]
+                        [:published :integer]
+                        [:extension "VARCHAR(1024)"]
+                        [:genre "VARCHAR(1024)"]
+                        [:folder "VARCHAR(1024)"]
+                        [:filename "VARCHAR(1024)"]
+                        [:path "VARCHAR(1024)"]
+                        [:mod_date :TIMESTAMP]
+                        [:album_title "VARCHAR(1024)"]
+                        [:album_artist "VARCHAR(1024)"]
+                        [:album_sort "VARCHAR(1024)"]
+                        [:image :bool]
+                        [:other :text]
+                        ["foreign key(folder) REFERENCES folders(folder)"]))
+
+(def downloads 
+  (jdb/create-table-ddl :downloads
+                        [:file "VARCHAR(1024) PRIMARY KEY"]
+                        [:name "VARCHAR(1024)"]
+                        [:created :timestamp]
+                        [:filetypes "VARCHAR(1024)"]
+                        [:bitrates "VARCHAR(1024)"]))
+
+(def songs-downloads 
+  (jdb/create-table-ddl :songs_downloads
+                        [:song_file (str "VARCHAR(1024) REFERENCES songs(file)"
+                                         " ON DELETE CASCADE")]
+                        [:download_file 
+                         (str "VARCHAR(1024) REFERENCES downloads(file)"
+                              " ON DELETE CASCADE")]))
+
+
+
 (def folder-idx "CREATE INDEX songs_folder ON songs (folder)")
 
 (defn create-db  
   "Creates database and all tables and indexes at location in cfg-map. "
-  []
+  [db]
   (try
-    (jdb/with-connection db
-      (jdb/do-commands songs albums downloads songs-downloads 
-                       folders folder-idx artist-idx))
+    (jdb/db-do-commands db folders songs downloads songs-downloads)
+    (jdb/db-do-commands db folder-idx)
     (catch Exception ex
-      (do 
-        (log/error ex "Error creating database")
-        #_(System/exit (:db-failure exit-codes))))))
+      (log/error ex "Error creating database")
+      #_(System/exit (:db-failure exit-codes)))))
 
 (defn drop-db 
   "Deletes database file if it exists. Returns true if database deleted. Nil if
   database didn't exist."
-  []
-  (let [x (io/as-file (:subname db))]
-    (try 
-      (if (.exists x)
-        (io/delete-file x))
-      (catch Exception ex
-        (do 
-          (log/error ex "Error creating database")
-          #_(System/exit (:db-failure exit-codes)))))))
+  [db]
+  (try 
+    (jdb/db-do-commands db "DROP ALL OBJECTS DELETE FILES")
+    (catch Exception ex
+      (log/error ex "Error creating database")
+      #_(System/exit (:db-failure exit-codes)))))
 
 (defn recreate-db 
   "Deletes database and then recreates all tables and indexes without data."
-  []
-  (drop-db)
-  (create-db))
+  [db]
+  (drop-db db)
+  (create-db db))
