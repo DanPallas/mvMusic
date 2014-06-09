@@ -2,8 +2,6 @@
 
 
 ;---------------Constants---------------------------
-(def browse-path "/music/")
-(def download-path "/download/")
 (def zip-buff-length 4194304)
 (def db-name "library.db")
 (def supported-files 
