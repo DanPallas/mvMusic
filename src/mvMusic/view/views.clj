@@ -16,8 +16,10 @@
    [:meta {:name "viewport" :content "width=device-width, initial-scale=1.0"}]
    (include-css "/foundation/css/normalize.css"  
                 "/foundation/css/foundation.css")
-   ;[:link {:rel "stylesheet" :type "text/css" :href "/main.css"}]
-   (include-js "/foundation/js/vendor/modernizr.js")
+   (include-js "/foundation/js/vendor/modernizr.js"
+               "http://fb.me/react-0.10.0.js"
+               "/foundation/js/vendor/jquery.js"
+               "/foundation/js/foundation.min.js")
    [:title "mvMusic" ]])
 
 (defn- nav-bar
@@ -39,19 +41,8 @@
   "Generate vector for body of main page"
   []
   [:body
-   (include-js "/foundation/js/vendor/jquery.js"
-               "/foundation/js/foundation.min.js"
-               "http://fb.me/react-0.10.0.js"
-               "/js/out/goog/base.js"
-               "/js/app.js")
-   [:div.row 
-    [:div.small-12.medium-4.columns [:h1 "mvMusic"]]
-    [:div.small-12.medium-3.columns "search"]]
-   (nav-bar)
-   [:div#content " "]
-   [:script "$(document).foundation();"]
-   [:script "goog.require(\"mvMusic.core\");"]
-   ])
+   [:div#content (include-js "/main.js")]
+   [:script "$(document).foundation();"]])
 
 (defn main-page 
   []
