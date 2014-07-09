@@ -1,0 +1,17 @@
+<div class="row" ng-controller="ArtistsCtrl">
+	<div class="artist row" ng-repeat="artist in artists | 
+		filter:{artist:filterVal}|orderBy:order()">
+		<div class="artist-name small-12 medium-3 columns">
+			{{artist.artist}}
+		</div>
+		<div class="artist-number-albums small-4 medium-3 columns">
+			{{artist.albums}} albums
+		</div>
+		<div class="artist-number-songs small-4 medium-3 columns">
+			{{artist.songs}} songs
+		</div>
+		<div class="artist-time small-4 medium-3 columns">
+			{{artist.time}}
+		</div>
+	</div>
+</div>

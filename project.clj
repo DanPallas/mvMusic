@@ -4,7 +4,6 @@
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [compojure "1.1.5"]
                  [ring/ring-json "0.3.1"]
-                 [hiccup "1.0.4"]
                  [org/jaudiotagger "2.0.3"]
                  [org.clojure/java.jdbc "0.3.3"]
                  [korma "0.3.1"]
@@ -12,7 +11,6 @@
                ;  [log4j/log4j "1.2.17"]
                  [org.clojure/tools.logging "0.2.6"] ]
   :plugins [[lein-ring "0.8.10"]
-            [lein-cljsbuild "1.0.3"]
             [lein-pdo "0.1.1"]]
   :ring {:init mvMusic.configuration/load-cfg
          :handler mvMusic.handler/app}

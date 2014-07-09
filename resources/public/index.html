@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en" ng-app="mvMusic" ng-controller="mvCtrl">
+<head>
+	<meta charset="utf-8">
+	<title>MvMusic</title>
+	<link href="/foundation/css/foundation.css" rel="stylesheet" type="text.css">
+	<link href="/foundation/css/normalize.css" rel="stylesheet" type="text.css">
+	<link rel="/app.css">
+	<script src="http://code.jquery.com/jquery-2.1.1.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.js"></script>
+  <script src="https://code.angularjs.org/1.2.19/angular-route.js"></script>
+  <script src="https://code.angularjs.org/1.2.19/angular-resource.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/controllers.js"></script>
+  <script src="/js/services.js"></script>
+  <script src="/foundation/js/vendor/modernizr.js"></script>
+  <script src="/foundation/js/foundation.min.js"></script>
+</head>
+<body>
+<div id="container">
+	<div class="row">
+		<div class="small-12 medium-4 columns">
+			<h1>mvMusic</h1>
+		</div>
+		<div class="small-12 medium-8 columns">
+			Filter: <input ng-model="filterVal">
+		</div>
+	</div>
+	<nav class="top-bar" data-topbar>
+		<ul class="title-area">
+			<li class="name"></li>
+			<li class="toggle-topbar menu-icon"><a href=""><span>Menu</span></a></li>
+		</ul>
+		<section class="top-bar-section">
+			<ul class="left">
+				<li class="has-dropdown">
+				<a href="" ng-click="toggleOrder()">Order: {{getOrderLabel()}}</a>
+				<ul class="dropdown">
+					<li><a href="" ng-click="setOrder('+')">A-Z</a></li>
+					<li><a href="" ng-click="setOrder('-')">Z-A</a></li>
+				</ul>
+				</li>
+			</ul>
+			<ul class="right">
+				<li class="{{isActive('artists')}}">
+					<a href="" ng-click="setContext('artists')">Artists</a></li>
+				<li class="{{isActive('albums')}}">
+					<a href="" ng-click="setContext('albums')">Albums</a>
+				</li>
+				<li class="{{isActive('downloads')}}">
+					<a href="" ng-click="setContext('downloads')">Downloads</a></li>
+				<li class="{{isActive('settings')}}">
+					<a href="" ng-click="setContext('settings')">Settings</a></li>
+			</ul>
+		</section>
+	</nav>
+	<div ng-switch="context" class="content-container">
+		<div class="context-container" ng-switch-when="artists">
+			<ng-include src="'/partials/artists.html'"></ng-include>
+		</div>
+		<div class="context-container" ng-switch-when="albums">
+			<ng-include src="'/partials/albums.html'"></ng-include>
+		</div>
+		<div class="context-container" ng-switch-when="downloads">
+			<ng-include src="'/partials/downloads.html'"></ng-include>
+		</div>
+		<div class="context-container" ng-switch-when="settings">
+			<ng-include src="'/partials/settings.html'"></ng-include>
+		</div>
+	</div>
+</div>
+<script>$(document).foundation();</script>
+</body>
