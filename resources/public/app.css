@@ -1,3 +1,11 @@
-.foundation-data-attribute-namespace {
-    font-family: false;
+.artist-name{
+	font-weight: bold;
+}
+.artist{
+	padding:1%;
+	background:#505050;
+	color:white;
+	border-style:solid;
+	border-width:medium 0px 0px 0px;
+	border-color:#AAAAAA;
 }
