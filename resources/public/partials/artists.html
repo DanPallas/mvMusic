@@ -1,17 +1,44 @@
-<div class="row" ng-controller="ArtistsCtrl">
-	<div class="artist row" ng-repeat="artist in artists | 
-		filter:{artist:filterVal}|orderBy:order()">
-		<div class="artist-name small-12 medium-3 columns">
-			{{artist.artist}}
+<div class="content-container" ng-controller="ArtistsCtrl">
+	<div class="row" ng-controller="ArtistCtrl" ng-repeat="artist in artists | filter:{artist:filterVal} | orderBy:order()">
+		<div class="artist row">
+			<div class="expand-button small-0 medium-1 columns">
+				<span><a href="" ng-click="toggleAlbums()">{{toggleSymbol()}}</a></span>
+			</div>
+			<div class="artist-name small-12 medium-3 columns">
+				{{artist.artist}}
+			</div>
+			<div class="artist-number-albums small-4 medium-3 columns">
+				{{artist.albums}} albums
+			</div>
+			<div class="artist-number-songs small-4 medium-3 columns">
+				{{artist.songs}} songs
+			</div>
+			<div class="artist-time small-4 medium-2 columns">
+				{{artist.time}}
+			</div>
 		</div>
-		<div class="artist-number-albums small-4 medium-3 columns">
-			{{artist.albums}} albums
-		</div>
-		<div class="artist-number-songs small-4 medium-3 columns">
-			{{artist.songs}} songs
-		</div>
-		<div class="artist-time small-4 medium-3 columns">
-			{{artist.time}}
+		<div ng-show="showAlbums" ng-repeat="album in albums" 
+			class="small-12 columns artist-albums">
+			<div class="row detail-title">
+				<div class="small-10 columns">{{album.title}}</div>
+				<div class="small-2 columns">{{album.length}}</div>
+				<div class="header">
+					<div class="small-3 columns">title</div>
+					<div class="small-3 columns">artist</div>
+					<div class="small-2 columns">length</div>
+					<div class="small-2 columns">codec</div>
+					<div class="small-1 columns">bitrate</div>
+					<div class="small-1 columns">size</div>
+				</div>
+				<div class="songs" ng-repeat="song in album.songs">
+					<div class="small-3 columns">{{song.title}}</div>
+					<div class="small-3 columns">{{song.artist}}</div>
+					<div class="small-2 columns">{{song.length}}</div>
+					<div class="small-2 columns">{{song.codec}}</div>
+					<div class="small-1 columns">{{song.bitrate}}</div>
+					<div class="small-1 columns">{{song.filesize}}</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

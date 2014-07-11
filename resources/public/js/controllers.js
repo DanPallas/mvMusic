@@ -39,3 +39,23 @@ mvControllers.controller('ArtistsCtrl',['$scope','ArtistSvc',
 				return $scope.$parent.order + 'sort';
 			};
 		}]);
+
+mvControllers.controller('ArtistCtrl',['$scope','ArtistSvc',
+		function($scope, ArtistSvc, artist){
+			$scope.albums = null;
+			$scope.showAlbums = false;
+			$scope.toggleSymbol = function(){
+				if($scope.showAlbums)
+					return '-';
+				else
+					return '+';
+			};
+			$scope.toggleAlbums = function(){ 
+				if($scope.albums === null)
+					$scope.albums = ArtistSvc.query({artist:$scope.artist.artist});
+				if($scope.showAlbums === false)
+					$scope.showAlbums = true;
+				else
+					$scope.showAlbums = false;
+			};
+		}]);
