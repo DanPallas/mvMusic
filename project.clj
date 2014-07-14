@@ -11,9 +11,10 @@
                ;  [log4j/log4j "1.2.17"]
                  [org.clojure/tools.logging "0.2.6"] ]
   :plugins [[lein-ring "0.8.10"]
-            [lein-pdo "0.1.1"]]
+            [lein-pdo "0.1.1"] ]
   :ring {:init mvMusic.configuration/load-cfg
          :handler mvMusic.handler/app}
   :profiles {:dev {:dependencies [[ring-mock "0.1.5"]
-                        [midje "1.6.0"]]}}
+                                  [midje "1.6.0"]]
+                   :prep-tasks ["javac" "compile"]}}
   :source-paths ["src"])

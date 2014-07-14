@@ -1,8 +1,9 @@
-<div class="content-container" ng-controller="ArtistsCtrl">
-	<div class="row" ng-controller="ArtistCtrl" ng-repeat="artist in artists | filter:{artist:filterVal} | orderBy:order()">
-		<div class="artist row">
+<div class="small-12 columns" ng-controller="ArtistsCtrl">
+	<div class="small-12 columns" ng-controller="ArtistCtrl" ng-repeat="artist in artists | filter:{artist:filterVal} | orderBy:order()">
+		<div class="row artist">
 			<div class="expand-button small-0 medium-1 columns">
-				<span><a href="" ng-click="toggleAlbums()">{{toggleSymbol()}}</a></span>
+				<a href="" ng-click="toggleAlbums()">
+					<span><div>{{toggleSymbol()}}</div></span></a>
 			</div>
 			<div class="artist-name small-12 medium-3 columns">
 				{{artist.artist}}
@@ -18,19 +19,21 @@
 			</div>
 		</div>
 		<div ng-show="showAlbums" ng-repeat="album in albums" 
-			class="small-12 columns artist-albums">
-			<div class="row detail-title">
-				<div class="small-10 columns">{{album.title}}</div>
-				<div class="small-2 columns">{{album.length}}</div>
-				<div class="header">
-					<div class="small-3 columns">title</div>
-					<div class="small-3 columns">artist</div>
-					<div class="small-2 columns">length</div>
-					<div class="small-2 columns">codec</div>
-					<div class="small-1 columns">bitrate</div>
-					<div class="small-1 columns">size</div>
+			class="artist-albums">
+			<div class="album-detail-medium small-12 columns">
+				<div class="subheading1 row">
+					<div class="small-10 columns">{{album.title}}</div>
+					<div class="small-2 columns">{{album.length}}</div>
 				</div>
-				<div class="songs" ng-repeat="song in album.songs">
+				<div class="headers row">
+					<div class="small-3 columns header">title</div>
+					<div class="small-3 columns header">artist</div>
+					<div class="small-2 columns header">length</div>
+					<div class="small-2 columns header">codec</div>
+					<div class="small-1 columns header">bitrate</div>
+					<div class="small-1 columns header">size</div>
+				</div>
+				<div class="songs row" ng-repeat="song in album.songs">
 					<div class="small-3 columns">{{song.title}}</div>
 					<div class="small-3 columns">{{song.artist}}</div>
 					<div class="small-2 columns">{{song.length}}</div>

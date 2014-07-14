@@ -2,10 +2,29 @@
 	font-weight: bold;
 }
 .artist{
-	padding:1%;
-	background:#505050;
+//	padding:1%;
+	background-color:#505050;
 	color:white;
 	border-style:solid;
 	border-width:medium 0px 0px 0px;
 	border-color:#AAAAAA;
+}
+.album-detail-medium{
+//	margin:3px;
+	background-color:#AAAAAA;
+}
+.subheading1{
+	//padding:3px;
+	//background-color:#AAAAAA;
+	font-weight:bold;
+}
+.headers{
+	background-color:#DDDDDD;
+	text-decoration:underline;
+}
+.header{
+	text-decoration:underline;
+}
+.detail-title{
+	//margin:3px;
 }
