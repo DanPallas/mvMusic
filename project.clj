@@ -4,6 +4,7 @@
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [compojure "1.1.5"]
                  [ring/ring-json "0.3.1"]
+                 [ring/ring-jetty-adapter "1.3.0"]
                  [org/jaudiotagger "2.0.3"]
                  [org.clojure/java.jdbc "0.3.3"]
                  [korma "0.3.1"]
@@ -17,4 +18,7 @@
   :profiles {:dev {:dependencies [[ring-mock "0.1.5"]
                                   [midje "1.6.0"]]
                    :prep-tasks ["javac" "compile"]}}
-  :source-paths ["src"])
+  :source-paths ["src"]
+  :aot :all
+  :omit-source true
+  :main mvMusic.main)

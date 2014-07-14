@@ -42,7 +42,7 @@
   (->> (list-func path)
        (map #(vector (first %1) (to-relative (second %1))))))
 
-(defn directory-url-list 
+#_(defn directory-url-list 
   "Returns a list containing a vector for each non-hidden child directory of 
   of the passed path Each vector contains the filename and a url 
   representation of the file."
@@ -51,7 +51,7 @@
        (map #(vector (first %1) (->> (to-relative (second %1))
                                      (str browse-path)))) ))
 
-(defn file-url-list 
+#_(defn file-url-list 
   "Returns a vector containing a vector for each non-hidden child file of 
   of the passed directory. Each vector contains the 
   filename and a url representation of the file path."
