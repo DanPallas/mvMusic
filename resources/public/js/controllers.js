@@ -38,6 +38,7 @@ mvControllers.controller('ArtistsCtrl',['$scope','ArtistSvc',
 			$scope.order = function(){
 				return $scope.$parent.order + 'sort';
 			};
+			$scope.utils = mvUtilities.utils;
 		}]);
 
 mvControllers.controller('ArtistCtrl',['$scope','ArtistSvc',
@@ -58,4 +59,5 @@ mvControllers.controller('ArtistCtrl',['$scope','ArtistSvc',
 				else
 					$scope.showAlbums = false;
 			};
+			$scope.utils = mvUtilities.utils;
 		}]);

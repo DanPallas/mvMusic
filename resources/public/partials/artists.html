@@ -15,7 +15,7 @@
 				{{artist.songs}} songs
 			</div>
 			<div class="artist-time small-4 medium-2 columns">
-				{{artist.time}}
+				{{utils.formatTime(artist.time)}}
 			</div>
 		</div>
 		<div ng-show="showAlbums" ng-repeat="album in albums" 
@@ -23,7 +23,9 @@
 			<div class="album-detail-medium small-12 columns">
 				<div class="subheading1 row">
 					<div class="small-10 columns">{{album.title}}</div>
-					<div class="small-2 columns">{{album.length}}</div>
+					<div class="small-2 columns">
+						{{utils.formatTime(album.length)}}
+					</div>
 				</div>
 				<div class="headers row">
 					<div class="small-3 columns header">title</div>
@@ -36,7 +38,9 @@
 				<div class="songs row" ng-repeat="song in album.songs">
 					<div class="small-3 columns">{{song.title}}</div>
 					<div class="small-3 columns">{{song.artist}}</div>
-					<div class="small-2 columns">{{song.length}}</div>
+					<div class="small-2 columns">
+						{{utils.formatTime(song.length)}}
+					</div>
 					<div class="small-2 columns">{{song.codec}}</div>
 					<div class="small-1 columns">{{song.bitrate}}</div>
 					<div class="small-1 columns">{{song.filesize}}</div>
