@@ -2,7 +2,8 @@
 
 var mvMusicMod = angular.module('mvMusic', [
 		'mvControllers',
-		'mvServices'
+		'mvServices',
+		'ngAnimate'
 		]);
 
 var mvUtilities = mvUtilities || {};

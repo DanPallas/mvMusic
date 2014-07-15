@@ -1,0 +1,20 @@
+.accordion-body {
+  line-height: 100%;
+  -webkit-transition: 0.2s linear all;
+  transition: 0.2s linear all;
+}
+.accordion-body.ng-hide-add,
+.accordion-body.ng-hide-remove {
+  display: block !important;
+  line-height: 0%;
+}
+
+.accordion-body.ng-hide-remove.ng-hide-remove-active {
+  line-height: 100%;
+}
+.accordion-body.ng-hide-add{
+  line-height: 100%;
+}
+.accordion-body.ng-hide-add.ng-hide-add-active {
+  line-height: 0%;
+}

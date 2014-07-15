@@ -1,5 +1,5 @@
 <div class="small-12 columns" ng-controller="ArtistsCtrl">
-	<div class="small-12 columns" ng-controller="ArtistCtrl" ng-repeat="artist in artists | filter:{artist:filterVal} | orderBy:order()">
+	<div  ng-controller="ArtistCtrl" ng-repeat="artist in artists | filter:{artist:filterVal} | orderBy:order()" class="small-12 columns">
 		<div class="row artist">
 			<div class="expand-button small-0 medium-1 columns">
 				<a href="" ng-click="toggleAlbums()">
@@ -18,32 +18,33 @@
 				{{utils.formatTime(artist.time)}}
 			</div>
 		</div>
-		<div ng-show="showAlbums" ng-repeat="album in albums" 
-			class="artist-albums row">
-			<div class="album-detail-medium small-12 columns">
-				<div class="subheading1 row">
-					<div class="small-10 columns">{{album.title}}</div>
-					<div class="small-2 columns">
-						{{utils.formatTime(album.length)}}
+		<div class="accordion-body" ng-show="showAlbums">
+			<div ng-repeat="album in albums"  class="artist-albums row">
+				<div class="album-detail-medium small-12 columns">
+					<div class="subheading1 row">
+						<div class="small-10 columns">{{album.title}}</div>
+						<div class="small-2 columns">
+							{{utils.formatTime(album.length)}}
+						</div>
 					</div>
-				</div>
-				<div class="headers row">
-					<div class="small-3 columns header">title</div>
-					<div class="small-3 columns header">artist</div>
-					<div class="small-2 columns header">length</div>
-					<div class="small-2 columns header">codec</div>
-					<div class="small-1 columns header">bitrate</div>
-					<div class="small-1 columns header">size</div>
-				</div>
-				<div class="songs row" ng-repeat="song in album.songs">
-					<div class="small-3 columns">{{song.title}}</div>
-					<div class="small-3 columns">{{song.artist}}</div>
-					<div class="small-2 columns">
-						{{utils.formatTime(song.length)}}
+					<div class="headers row">
+						<div class="small-3 columns header">title</div>
+						<div class="small-3 columns header">artist</div>
+						<div class="small-2 columns header">length</div>
+						<div class="small-2 columns header">codec</div>
+						<div class="small-1 columns header">bitrate</div>
+						<div class="small-1 columns header">size</div>
 					</div>
-					<div class="small-2 columns">{{song.codec}}</div>
-					<div class="small-1 columns">{{song.bitrate}}</div>
-					<div class="small-1 columns">{{song.filesize}}</div>
+					<div class="songs row" ng-repeat="song in album.songs">
+						<div class="small-3 columns">{{song.title}}</div>
+						<div class="small-3 columns">{{song.artist}}</div>
+						<div class="small-2 columns">
+							{{utils.formatTime(song.length)}}
+						</div>
+						<div class="small-2 columns">{{song.codec}}</div>
+						<div class="small-1 columns">{{song.bitrate}}</div>
+						<div class="small-1 columns">{{song.filesize}}</div>
+					</div>
 				</div>
 			</div>
 		</div>
