@@ -25,7 +25,8 @@
 
 (def songs 
   (jdb/create-table-ddl :songs
-                        [:file :nvarchar "PRIMARY KEY"]
+                        [:id_no :identity]
+                        [:file :nvarchar "UNIQUE"]
                         [:track :integer]
                         [:track_total :integer]
                         [:disc_no :integer]
