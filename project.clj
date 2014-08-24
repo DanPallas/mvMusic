@@ -6,7 +6,6 @@
                  [ring/ring-json "0.3.1"]
                  [ring/ring-jetty-adapter "1.3.0"]
                  [org.clojure/java.jdbc "0.3.3"]
-                 [korma "0.3.1"]
                  [com.h2database/h2 "1.4.178"]
                  [org.clojure/tools.logging "0.2.6"] ]
   :plugins [[lein-ring "0.8.10"]
