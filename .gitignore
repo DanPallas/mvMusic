@@ -18,3 +18,4 @@ src/mvMusic/.DS_Store
 .Rhistory
 .nrepl-port
 plan.txt
+*.db

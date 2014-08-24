@@ -10,13 +10,13 @@
   returned, otherwise cfg-map will determine location."
   {:classname "org.h2.Driver"
    :subprotocol "h2"
-   :subname (if (first path)
-              path
+   :subname (.getAbsolutePath (io/as-file (if (first path)
+              (first path)
               (str (:temp-folder cfg-map) 
                    (if (= (last (:temp-folder cfg-map)) \/) 
                      "" 
                      \/) 
-                   "library"))})
+                   "library"))))})
 
 (def folders
   (jdb/create-table-ddl :folders
@@ -44,7 +44,7 @@
                         [:bmp :integer]
                         [:grouping :nvarchar]
                         [:isrc :nvarchar]
-                        [:record-label :nvarchar]
+                        [:record_label :nvarchar]
                         [:encoder :nvarchar]
                         [:lyricist :nvarchar]
                         [:lyrics :nclob]
@@ -86,8 +86,7 @@
   "Creates database and all tables and indexes using db-spec"
   [db-spec]
   (try
-    (jdb/db-do-commands db-spec folders songs)
-    (jdb/db-do-commands db-spec folder-idx)
+    (jdb/db-do-commands db-spec folders songs folder-idx)
     (catch Exception ex
       (log/error ex "Error creating database")
       #_(System/exit (:db-failure exit-codes)))))
@@ -97,7 +96,7 @@
   database didn't exist."
   [db-spec]
   (try 
-    (jdb/db-do-commands db "DROP ALL OBJECTS DELETE FILES")
+    (jdb/db-do-commands db-spec "DROP ALL OBJECTS DELETE FILES")
     (catch Exception ex
       (log/error ex "Error creating database")
       #_(System/exit (:db-failure exit-codes)))))
