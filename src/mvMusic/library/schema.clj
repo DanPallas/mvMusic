@@ -26,13 +26,15 @@
 (def songs 
   (jdb/create-table-ddl :songs
                         [:id_no :identity]
-                        [:file :nvarchar "UNIQUE"]
+                        [:file :nvarchar "UNIQUE NOT NULL"]
                         [:track :integer]
                         [:track_total :integer]
                         [:disc_no :integer]
                         [:disc_total :integer]
                         [:title :nvarchar]
                         [:artist :nvarchar]
+                        [:artist_sort :nvarchar]
+                        [:album_sort :nvarchar]
                         [:album :nvarchar]
                         [:album_artist :nvarchar]
                         [:year :integer]
@@ -58,10 +60,9 @@
                         [:sample_rate :integer]
                         [:length :integer]
                         [:variable_bit_rate :boolean]
-                        [:folder :nvarchar]
-                        [:filename :nvarchar]
-                        [:mod_date :timestamp]
-                        ["foreign key(folder) REFERENCES folders(folder)"]))
+                        [:folder :nvarchar "NOT NULL"]
+                        [:filename :nvarchar "NOT NULL"]
+                        [:mod_date :long "NOT NULL"]))
 
 ;(def downloads 
 ;  (jdb/create-table-ddl :downloads

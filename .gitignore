@@ -19,3 +19,4 @@ src/mvMusic/.DS_Store
 .nrepl-port
 plan.txt
 *.db
+*.lein-repl-history
