@@ -49,8 +49,8 @@
     :channels 2, :encoding-type "mp3", :format "mp3 format", :sample-rate 44000, 
     :length 123, :variable-bit-rate true, :mod-date 111},
    {:file "/path2/path1/file2" :mod-date 232}])
-(def folders [{:path "/as/asdf/asd", :mod-date 11231},
-              {:path "/as/f/asd", :mod-date 112}])
+(def folders [{:folder "/as/asdf/asd", :mod-date 11231},
+              {:folder "/as/f/asd", :mod-date 112}])
 (def calculated [{:folder "/path/path1", :filename "file1", 
                   :artist-sort "artist1", :album-sort "album1"},
                  {:folder "/path/path1", :filename "file2", 
@@ -65,18 +65,18 @@
   (against-background 
     [(before :facts (recreate-db! db))]
     (fact "it returns id for each successfull add (one song)"
-          (add-songs! db [(last songs)])=> (just [integer?]))
+          (add-songs! db [(last songs)])=> (just [true]))
     (fact "it returns id for each successfull add"
           (add-songs! db songs)
-          => (just [integer? integer? integer? integer? integer?]))
+          => (just [true true true true true]))
     (fact "it returns error string for unsucessful adds"
           (add-songs! db (conj songs {:file "/sdf/asdf"}))
-          => (just [integer? integer? integer? integer? integer? string?]))))
+          => (just [true true true true true string?]))))
 (facts "about add-folders!"
    (against-background 
     [(before :facts (recreate-db! db))]
     (fact "it returns true for each successfuly added folder"
-         (add-folders! db folders)=> [true true])
+         (add-folders! db folders) => [true true])
     (fact "it returns error string for each unsuccessfuly added folder"
          (add-folders! db (conj folders {:path"/asd/asd"}))
          => (just [true true string?]))))

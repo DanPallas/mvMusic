@@ -20,8 +20,8 @@
 
 (def folders
   (jdb/create-table-ddl :folders
-                        [:folder "VARCHAR" "PRIMARY KEY"]
-                        [:mod_date :TIMESTAMP]))
+                        [:folder :nvarchar "PRIMARY KEY"]
+                        [:mod_date :long "NOT NULL"]))
 
 (def songs 
   (jdb/create-table-ddl :songs

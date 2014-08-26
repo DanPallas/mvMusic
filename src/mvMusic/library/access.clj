@@ -40,29 +40,32 @@
   (assoc song 
          :artist-sort (remove-articles (:artist song))
          :album-sort (remove-articles (:album song))))
-(defn- safe-insert
+(defn- safe-insert!
   [db tbl-key]
   (fn
     [m]
     (try
       (apply vals (j/insert! db tbl-key m))
       (catch Exception e
-        (log/error (str "failed to insert " m " into songs") e)
+        (log/error (str "failed to insert " m " into " (name tbl-key)) e)
         (str e)))))
 
 (defn add-songs!
+  "adds a song into the library"
   [db songs]
-  (as->
-    (map (comp assoc-sort assoc-file-folder) songs) $
-    (map keys->columns $)
-    (map (safe-insert db :SONGS) $)
-    (reduce #(conj %1 (if (string? %2) %2 (first %2))) [] $)))
+  (->>
+    (map (comp assoc-sort assoc-file-folder) songs)
+    (map keys->columns)
+    (map (safe-insert! db :SONGS))
+    (reduce 
+      (fn [col entry] 
+        (conj col (if (string? entry) entry true))) 
+      [])))
 
 (defn add-folders!
+  "adds a folder into the library"
   [db folders]
-  nil)
-;#_(def db
-;  {:classname "org.h2.Driver"
-;   :subprotocol "h2"
-;   :subname (.getAbsolutePath (as-file "test/resources/scratchdb"))})
-;#_(j/query db (q/get-all-songs))
+  (->>
+    (map keys->columns folders)
+    (map (safe-insert! db :FOLDERS))
+    (reduce #(conj %1 (if (nil? %2) true %2)) [])))
