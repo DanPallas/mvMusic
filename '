@@ -81,22 +81,25 @@
          (add-folders! db (conj folders {:path"/asd/asd"}))
          => (just [true true string?]))))
 
-(defn blob?
-  [o]
-  (instance? o org.h2.jdbc.JdbcBlob))
-(defn clob?
-  [o]
-  (instance? o org.h2.jdbc.JdbcClob))
 (facts 
   "about get-songs"
   (against-background 
     [(before :facts (recreate-db! db))]
     (fact 
       "it gets all songs in unspecified order when no options are passed"
-          (add-songs! db [(first songs) (second songs)])
-          (get-songs db) 
-          => (just (contains  {:file "/path/path1/file1"})
-                   (contains  {:file "/path/path1/file2"})))))
+          (add-songs! db [(first songs) #_(second songs)])
+          (get-songs db) => (contains 
+  (contains
+    {:file "/path/path1/file1", :track 1, :track-total 10, :disc-no 1, :disc-total
+    2, :title "song1", :artist "the artist1", :album "A album1", :album-artist 
+    "album-artist1", :year 1999, :genre "Rock", :comment "comment1", 
+    :composer "composer1", :original-artist "original-artist", 
+    :remixer "remixed by", :conductor "conducted by", :bmp 45, 
+    :grouping "group by", :isrc "isrc?", :record-label "records", 
+    :encoder "none", :lyricist "dasf sdfsdfs", :lyrics "lyrics nclob", 
+    :artwork-mime "png", :artwork-data (byte-array [1 2 3 4]) , :bit-rate 128, 
+    :channels 2, :encoding-type "mp3", :format "mp3 format", :sample-rate 44000, 
+    :length 123, :variable-bit-rate true, :mod-date 111}) ))))
 
 #_(fact "adfa"
       [{:a "a" :b "b"}{:a "1" :b "2"}]

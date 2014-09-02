@@ -20,6 +20,10 @@
     {}
     (seq m)))
 
+(defn- column->key
+  [k]
+  (keyword (s/replace (s/lower-case (name k)) #"_" "-")))
+
 (defn- assoc-file-folder
   [song]
   (let [file (as-file (as-file (:file song)))]
@@ -69,3 +73,6 @@
     (map keys->columns folders)
     (map (safe-insert! db :FOLDERS))
     (reduce #(conj %1 (if (nil? %2) true %2)) [])))
+(defn get-songs
+  [db & opts]
+  (j/query db "SELECT * FROM SONGS" :identifiers column->key))
