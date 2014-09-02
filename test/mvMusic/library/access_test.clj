@@ -60,6 +60,7 @@
                  {:folder "/path2/path1", :filename "file1", 
                   :artist-sort "artist2", :album-sort "album1"},
                  {:folder "/path2/path1", :filename "file1"}])
+
 (facts
   "about add-songs!"
   (against-background 
@@ -71,7 +72,12 @@
           => (just [true true true true true]))
     (fact "it returns error string for unsucessful adds"
           (add-songs! db (conj songs {:file "/sdf/asdf"}))
-          => (just [true true true true true string?]))))
+          => (just [true true true true true string?]))
+    (fact "it updates songs that already exist"
+        (add-songs! db songs)
+        (add-songs! db [(assoc (first songs) :title "test-title")])
+        (get-songs db :file (:file (first songs))) 
+        => (just (contains {:title "test-title"})))))
 
 (facts "about add-folders!"
    (against-background 
@@ -95,8 +101,8 @@
                 (add-folders! db [{:folder "/path1" :mod-date 100}])
                 => [true]))))
 
-(facts "about get folder"
-       (against-background
+(facts "about get-folder"
+     (against-background
          [(before :facts (recreate-db! db)) 
           (before :checks (add-folders! db folders))]
          (fact "it returns nil if the db doesn't containg folder"
@@ -119,4 +125,8 @@
           (add-songs! db [(first songs) (second songs)])
           (get-songs db) 
           => (just (contains  {:file "/path/path1/file1"})
-                   (contains  {:file "/path/path1/file2"})))))
+                   (contains  {:file "/path/path1/file2"})))
+    (fact "when :file <filename> is passed it returns that file"
+          (add-songs! db songs)
+          (get-songs db :file (:file (first songs)))
+          => (just (contains {:file (:file (first songs))})))))
