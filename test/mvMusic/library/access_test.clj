@@ -72,6 +72,7 @@
     (fact "it returns error string for unsucessful adds"
           (add-songs! db (conj songs {:file "/sdf/asdf"}))
           => (just [true true true true true string?]))))
+
 (facts "about add-folders!"
    (against-background 
     [(before :facts (recreate-db! db))]
@@ -79,14 +80,36 @@
          (add-folders! db folders) => [true true])
     (fact "it returns error string for each unsuccessfuly added folder"
          (add-folders! db (conj folders {:path"/asd/asd"}))
-         => (just [true true string?]))))
+         => (just [true true string?]))
+    (fact "if folder already exists, it updates it"
+          (add-folders! db [{:folder "folder1" :mod-date 10}])
+          (add-folders! db [{:folder "folder1" :mod-date 100}]) => [true]
+          (get-folder db "folder1") => {:folder "folder1" :mod-date 100})))
 
+(fact "about add-folder!"
+      (against-background 
+        [(before :facts (recreate-db! db))]
+        (fact "it calls add-folders! with folder in a seq"
+              (add-folder! db {:folder "/path1" :mod-date 100}) => true
+              (provided 
+                (add-folders! db [{:folder "/path1" :mod-date 100}])
+                => [true]))))
+
+(facts "about get folder"
+       (against-background
+         [(before :facts (recreate-db! db)) 
+          (before :checks (add-folders! db folders))]
+         (fact "it returns nil if the db doesn't containg folder"
+               (get-folder db "path1") => nil)
+         (fact "it returns the folder if the path given matches a folder"
+               (get-folder db (:folder (first folders))) => (first folders))))
 (defn blob?
   [o]
   (instance? o org.h2.jdbc.JdbcBlob))
 (defn clob?
   [o]
   (instance? o org.h2.jdbc.JdbcClob))
+
 (facts 
   "about get-songs"
   (against-background 
@@ -97,9 +120,3 @@
           (get-songs db) 
           => (just (contains  {:file "/path/path1/file1"})
                    (contains  {:file "/path/path1/file2"})))))
-
-#_(fact "adfa"
-      [{:a "a" :b "b"}{:a "1" :b "2"}]
-      => (contains (contains {:a "1"} ) (contains {:a "a"}) :in-any-order)
-     ; [{:a "a" :b "b"}{:a "1" :b "2"}] => (check-maps [{:a "1"} {:a "a"}])
-     )
